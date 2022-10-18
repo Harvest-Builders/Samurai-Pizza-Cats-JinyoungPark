@@ -3,7 +3,7 @@
 ## Getting Started
 
 1. Create a new personal (and private!) repository in the Harvest-Builder github organization: https://github.com/Harvest-Builders/
-   name: Samurai-Pizza-Cats-<your REAL name>
+   name: Samurai-Pizza-Cats-JinyoungPark
 
 1. Cloning the repository
    `git clone https://github.com/Harvest-Builders/Samurai-Pizza-Cats.git`
