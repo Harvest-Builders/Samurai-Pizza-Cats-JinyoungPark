@@ -60,6 +60,14 @@ class ToppingProvider {
 
     return toToppingObject(topping);
   }
+
+  public async getToppingsByIds(toppingIds: string[]): Promise<Topping[]> {
+    const toppings = await this.collection
+      .find({ _id: { $in: toppingIds } })
+      .sort({ name: 1 })
+      .toArray();
+    return toppings.map(toToppingObject);
+  }
 }
 
 export { ToppingProvider };
