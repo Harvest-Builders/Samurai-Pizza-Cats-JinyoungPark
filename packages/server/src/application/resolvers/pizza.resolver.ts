@@ -1,5 +1,7 @@
-import { Pizza } from '../schema/types/schema';
+import { Pizza as PizzaSchema } from '../schema/types/schema';
 import { pizzaProvider } from '../providers';
+
+type Pizza = Omit<PizzaSchema, 'toppings' | 'priceCents'> & { toppingIds: string[] };
 
 const pizzaResolver = {
   Query: {
@@ -9,4 +11,4 @@ const pizzaResolver = {
   },
 };
 
-export { pizzaResolver };
+export { pizzaResolver, Pizza };
