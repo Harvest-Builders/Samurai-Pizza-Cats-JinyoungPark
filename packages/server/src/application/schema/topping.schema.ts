@@ -4,7 +4,7 @@ const typeDefs = gql`
   type Topping {
     id: ObjectID!
     name: String!
-    priceCents: Int!
+    priceCents: Long!
   }
 
   type Query {
@@ -23,7 +23,7 @@ const typeDefs = gql`
 
   input CreateToppingInput {
     name: String!
-    priceCents: Int!
+    priceCents: Long!
   }
 
   input DeleteToppingInput {
@@ -33,7 +33,7 @@ const typeDefs = gql`
   input UpdateToppingInput {
     id: ObjectID!
     name: String
-    priceCents: Int
+    priceCents: Long
   }
 `;
 
