@@ -14,9 +14,20 @@ export type Scalars = {
   ObjectID: any;
 };
 
+export type CreatePizzaInput = {
+  description: Scalars['String'];
+  imgSrc: Scalars['String'];
+  name: Scalars['String'];
+  toppingIds: Scalars['ObjectID'];
+};
+
 export type CreateToppingInput = {
   name: Scalars['String'];
-  priceCents: Scalars['Int'];
+  priceCents: Scalars['Long'];
+};
+
+export type DeletePizzaInput = {
+  id: Scalars['ObjectID'];
 };
 
 export type DeleteToppingInput = {
@@ -25,17 +36,32 @@ export type DeleteToppingInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createPizza: Pizza;
   createTopping: Topping;
+  deletePizza: Scalars['ObjectID'];
   deleteTopping: Scalars['ObjectID'];
+  updatePizza: Pizza;
   updateTopping: Topping;
+};
+
+export type MutationCreatePizzaArgs = {
+  input: CreatePizzaInput;
 };
 
 export type MutationCreateToppingArgs = {
   input: CreateToppingInput;
 };
 
+export type MutationDeletePizzaArgs = {
+  input: DeletePizzaInput;
+};
+
 export type MutationDeleteToppingArgs = {
   input: DeleteToppingInput;
+};
+
+export type MutationUpdatePizzaArgs = {
+  input: UpdatePizzaInput;
 };
 
 export type MutationUpdateToppingArgs = {
@@ -48,7 +74,7 @@ export type Pizza = {
   id: Scalars['ObjectID'];
   imgSrc: Scalars['String'];
   name: Scalars['String'];
-  priceCents: Scalars['Int'];
+  priceCents: Scalars['Long'];
   toppingIds: Array<Scalars['String']>;
   toppings: Array<Topping>;
 };
@@ -63,15 +89,24 @@ export type Topping = {
   __typename?: 'Topping';
   id: Scalars['ObjectID'];
   name: Scalars['String'];
-  priceCents: Scalars['Int'];
+  priceCents: Scalars['Long'];
 };
 
 export type ToppingQueryArgs = {
   id: Scalars['ObjectID'];
 };
 
+export type UpdatePizzaInput = {
+  description?: InputMaybe<Scalars['String']>;
+  id: Scalars['ObjectID'];
+  imgSrc?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  priceCents?: InputMaybe<Scalars['Long']>;
+  toppingIds?: InputMaybe<Scalars['ObjectID']>;
+};
+
 export type UpdateToppingInput = {
   id: Scalars['ObjectID'];
   name?: InputMaybe<Scalars['String']>;
-  priceCents?: InputMaybe<Scalars['Int']>;
+  priceCents?: InputMaybe<Scalars['Long']>;
 };

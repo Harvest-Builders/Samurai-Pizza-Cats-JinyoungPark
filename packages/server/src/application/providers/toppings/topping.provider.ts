@@ -69,6 +69,16 @@ class ToppingProvider {
     return toppings.map(toToppingObject);
   }
 
+  public async validateToppings(toppingIds: string[]): Promise<void> {
+    for (var i = 0; i < toppingIds.length; i++) {
+      const element = new ObjectId(toppingIds[i]);
+      const toppingCount = await this.collection.countDocuments({ _id: element });
+      if (toppingCount < 1) {
+        throw new Error(`Could not find the topping of ID:${element}`);
+      }
+    }
+  }
+
   public async getPriceCents(toppingIds: string[]): Promise<number> {
     const toppings = await this.collection.find({ _id: { $in: toppingIds } }).toArray();
 
