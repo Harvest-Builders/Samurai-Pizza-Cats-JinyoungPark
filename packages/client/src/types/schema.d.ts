@@ -16,7 +16,7 @@ export type Scalars = {
 
 export type CreateToppingInput = {
   name: Scalars['String'];
-  priceCents: Scalars['Int'];
+  priceCents: Scalars['Long'];
 };
 
 export type DeleteToppingInput = {
@@ -48,6 +48,7 @@ export type Pizza = {
   id: Scalars['ObjectID'];
   imgSrc: Scalars['String'];
   name: Scalars['String'];
+  priceCents: Scalars['Long'];
   toppingIds: Array<Scalars['String']>;
   toppings: Array<Topping>;
 };
@@ -62,7 +63,7 @@ export type Topping = {
   __typename?: 'Topping';
   id: Scalars['ObjectID'];
   name: Scalars['String'];
-  priceCents: Scalars['Int'];
+  priceCents: Scalars['Long'];
 };
 
 export type ToppingQueryArgs = {
@@ -72,5 +73,5 @@ export type ToppingQueryArgs = {
 export type UpdateToppingInput = {
   id: Scalars['ObjectID'];
   name?: InputMaybe<Scalars['String']>;
-  priceCents?: InputMaybe<Scalars['Int']>;
+  priceCents?: InputMaybe<Scalars['Long']>;
 };

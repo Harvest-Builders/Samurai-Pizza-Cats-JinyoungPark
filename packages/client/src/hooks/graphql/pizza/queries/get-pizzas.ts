@@ -11,6 +11,7 @@ const GET_PIZZAS = gql`
       name
       id
       description
+      priceCents
       imgSrc
     }
   }
