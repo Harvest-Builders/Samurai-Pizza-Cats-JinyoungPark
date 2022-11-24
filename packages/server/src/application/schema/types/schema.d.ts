@@ -75,7 +75,6 @@ export type Pizza = {
   imgSrc: Scalars['String'];
   name: Scalars['String'];
   priceCents: Scalars['Long'];
-  toppingIds: Array<Scalars['String']>;
   toppings: Array<Topping>;
 };
 
@@ -102,7 +101,7 @@ export type UpdatePizzaInput = {
   imgSrc?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   priceCents?: InputMaybe<Scalars['Long']>;
-  toppingIds?: InputMaybe<Scalars['ObjectID']>;
+  toppingIds?: InputMaybe<Array<Scalars['ObjectID']>>;
 };
 
 export type UpdateToppingInput = {
