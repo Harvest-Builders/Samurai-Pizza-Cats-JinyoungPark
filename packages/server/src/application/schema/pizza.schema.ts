@@ -6,7 +6,6 @@ const typeDefs = gql`
     name: String!
     description: String!
     toppings: [Topping!]!
-    toppingIds: [String!]!
     imgSrc: String!
     priceCents: Long!
   }
@@ -42,7 +41,7 @@ const typeDefs = gql`
     id: ObjectID!
     name: String
     description: String
-    toppingIds: ObjectID
+    toppingIds: [ObjectID!]
     imgSrc: String
     priceCents: Long
   }

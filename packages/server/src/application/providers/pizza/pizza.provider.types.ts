@@ -1,11 +1,8 @@
-import { Topping } from '../toppings/topping.provider.types';
-
 export interface Pizza {
   id: string;
   name: string;
   description: string;
   toppingIds: string[];
-  toppings: Topping[];
   imgSrc: string;
 }
 
@@ -20,7 +17,7 @@ export interface UpdatePizzaInput {
   id: string;
   name?: string | null;
   description?: string | null;
-  toppings?: Topping[];
+  toppingIds?: string[] | null;
   imgSrc?: string | null;
   priceCents?: number | null;
 }
