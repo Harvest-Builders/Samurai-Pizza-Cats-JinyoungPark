@@ -22,6 +22,9 @@ beforeEach(async (): Promise<void> => {
   jest.restoreAllMocks();
 });
 
+const mockTopping = createMockTopping();
+const mockPizza = createMockPizza({ toppings: [mockTopping], priceCents: mockTopping.priceCents });
+
 describe('pizzaResolver', (): void => {
   describe('Mutation', () => {
     describe('createPizza', () => {
