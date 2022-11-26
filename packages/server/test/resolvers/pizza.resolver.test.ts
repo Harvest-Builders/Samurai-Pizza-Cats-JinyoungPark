@@ -1,13 +1,13 @@
 import { gql } from 'apollo-server-core';
 
 import { pizzaResolver } from '../../src/application/resolvers/pizza.resolver';
-import { pizzaProvider, toppingProvider } from '../../src/application/providers';
+import { pizzaProvider } from '../../src/application/providers';
 import { typeDefs } from '../../src/application/schema/index';
 import { createMockPizza } from '../helpers/pizza.helper';
 import { TestClient } from '../helpers/client.helper';
-import { toppingResolver } from 'src/application/resolvers/topping.resolver';
-import { createMockTopping } from 'test/helpers/topping.helper';
-import { MutationCreatePizzaArgs } from 'src/application/schema/types/schema';
+import { toppingResolver } from '../../src/application/resolvers/topping.resolver';
+import { createMockTopping } from '../../test/helpers/topping.helper';
+import { MutationCreatePizzaArgs } from '../../src/application/schema/types/schema';
 
 let client: TestClient;
 
@@ -89,7 +89,6 @@ describe('pizzaResolver', (): void => {
             name: validPizza.name,
             description: validPizza.description,
             imgSrc: validPizza.imgSrc,
-            toppingIds: [validTopping.id],
           },
         });
       });
