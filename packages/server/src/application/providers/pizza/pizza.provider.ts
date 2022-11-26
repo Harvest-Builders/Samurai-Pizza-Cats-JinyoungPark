@@ -3,7 +3,6 @@ import { PizzaDocument, toPizzaObject } from '../../../entities/pizza';
 import { CreatePizzaInput, Pizza, UpdatePizzaInput } from './pizza.provider.types';
 import validateStringInputs from '../../../lib/string-validator';
 import { ToppingProvider } from '../toppings/topping.provider';
-import { toppings } from 'scripts/initial-data';
 
 class PizzaProvider {
   constructor(private collection: Collection<PizzaDocument>, private toppingProvider: ToppingProvider) {}
