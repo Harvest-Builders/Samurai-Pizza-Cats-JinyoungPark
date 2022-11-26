@@ -62,6 +62,8 @@ class ToppingProvider {
   }
 
   public async getToppingsByIds(toppingIds: string[]): Promise<Topping[]> {
+    console.log(toppingIds);
+
     const toppings = await this.collection
       .find({ _id: { $in: toppingIds } })
       .sort({ name: 1 })

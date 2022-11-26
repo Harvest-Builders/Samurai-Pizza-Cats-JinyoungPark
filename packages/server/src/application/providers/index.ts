@@ -6,7 +6,7 @@ import { PizzaProvider } from './pizza/pizza.provider';
 const db = setupDb();
 
 const toppingProvider = new ToppingProvider(db.collection('toppings'));
-const pizzaProvider = new PizzaProvider(db.collection('pizzas'));
+const pizzaProvider = new PizzaProvider(db.collection('pizzas'), toppingProvider);
 
 export { toppingProvider };
 export { pizzaProvider };
