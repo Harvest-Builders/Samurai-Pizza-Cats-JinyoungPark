@@ -2,12 +2,10 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/styles';
 import { Container, createStyles, List, ListItem, Theme } from '@material-ui/core';
-
 import { Pizza } from '../../types';
 import { GET_PIZZAS } from '../../hooks/graphql/pizza/queries/get-pizzas';
 import PageHeader from '../common/PageHeader';
 import PizzaItem from './PizzaItem';
-
 const useStyles = makeStyles(({ typography }: Theme) =>
   createStyles({
     container: {
@@ -31,12 +29,9 @@ const useStyles = makeStyles(({ typography }: Theme) =>
     },
   })
 );
-
 const PizzaList: React.FC = () => {
   const classes = useStyles();
-
   const { loading, data, error } = useQuery(GET_PIZZAS);
-
   if (loading) {
     return <div className={classes.skeleton}>Loading ...</div>;
   }
@@ -46,7 +41,14 @@ const PizzaList: React.FC = () => {
   }
 
   const pizzaList = data?.pizzas.map((pizza: Pizza) => (
-    <PizzaItem data-testid={`pizza-item-${pizza?.id}`} key={pizza.id} pizza={pizza} />
+    <PizzaItem
+      data-testid={`pizza-item-${pizza?.id}`}
+      key={pizza.id}
+      pizza={pizza}
+      selectPizza={function (pizza?: Pizza | undefined): void {
+        throw new Error('Function not implemented.');
+      }}
+    />
   ));
 
   return (
@@ -56,11 +58,15 @@ const PizzaList: React.FC = () => {
         <ListItem className={classes.header}>
           <h2 className={classes.name}>Pizza</h2>
         </ListItem>
-        <PizzaItem key="add-pizza" />
+        <PizzaItem
+          key="add-pizza"
+          selectPizza={function (pizza?: Pizza | undefined): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
         {pizzaList}
       </List>
     </Container>
   );
 };
-
 export default PizzaList;
