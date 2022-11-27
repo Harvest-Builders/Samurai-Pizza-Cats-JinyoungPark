@@ -24,7 +24,10 @@ class PizzaProvider {
       { _id: new ObjectId() },
       {
         $set: {
-          ...input,
+          ...(toppingIds && { toppingIds: toppingIds.map((toppingId) => new ObjectId(toppingId)) }),
+          ...(name && { name: name }),
+          ...(description && { description: description }),
+          ...(imgSrc && { imgSrc: imgSrc }),
           updateAt: new Date().toISOString(),
           createAt: new Date().toISOString(),
         },
@@ -58,7 +61,7 @@ class PizzaProvider {
   }
 
   public async updatePizza(input: UpdatePizzaInput): Promise<Pizza> {
-    const { id, name, description, imgSrc } = input;
+    const { id, name, description, imgSrc, toppingIds } = input;
 
     if (name) validateStringInputs(name);
 
@@ -66,6 +69,7 @@ class PizzaProvider {
       { _id: new ObjectId(id) },
       {
         $set: {
+          ...(toppingIds && { toppingIds: toppingIds.map((toppingId) => new ObjectId(toppingId)) }),
           ...(name && { name: name }),
           ...(description && { description: description }),
           ...(imgSrc && { imgSrc: imgSrc }),

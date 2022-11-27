@@ -6,9 +6,12 @@ export const UPDATE_PIZZA = gql`
       id
       name
       description
-      toppingIds
       imgSrc
-      priceCents
+      toppings {
+        id
+        name
+        priceCents
+      }
     }
   }
 `;

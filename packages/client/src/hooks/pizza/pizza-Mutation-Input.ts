@@ -1,5 +1,4 @@
 export interface onCreateInput {
-  id: string;
   name: string;
   description: string;
   imgSrc: string;
