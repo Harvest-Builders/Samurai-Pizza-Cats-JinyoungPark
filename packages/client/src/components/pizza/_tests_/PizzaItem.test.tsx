@@ -22,19 +22,19 @@ describe('PizzaItem', () => {
       $getDescription: () => screen.getByTestId(/^pizza-description/),
       $getImage: () => screen.getByTestId(/^pizza-image/),
       $getPriceCents: () => screen.getByTestId(/^pizza-priceCents/),
-      $getToppings: () => screen.getByTestId(/^topping-item/),
+      // $getToppings: () => screen.getByTestId(/^topping-item/),
       $getModifyButton: () => screen.getByTestId(/^pizza-select/),
     };
   };
 
   test('should display all components of the pizza item', async () => {
-    const { $getName, $getDescription, $getImage, $getPriceCents, $getToppings } = renderPizzaList(props);
+    const { $getName, $getDescription, $getImage, $getPriceCents /*$getToppings*/ } = renderPizzaList(props);
 
     expect($getName()).toBeVisible();
     expect($getDescription()).toBeVisible();
     expect($getImage()).toBeVisible();
     expect($getPriceCents()).toBeVisible();
-    expect($getToppings()).toBeVisible();
+    // expect($getToppings()).toBeVisible();
   });
 
   test('should call handleOpen when the pizza list is clicked', async () => {
