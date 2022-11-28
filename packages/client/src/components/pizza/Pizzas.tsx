@@ -30,7 +30,7 @@ const Pizzas: React.FC = () => {
   const [selectedPizza, setSelectedPizza] = React.useState<Partial<Pizza>>();
   const { loading, data, error } = useQuery(GET_PIZZAS);
 
-  const selectPizza = (pizza?: Pizza): void => {
+  const handleOpen = (pizza?: Pizza): void => {
     setSelectedPizza(pizza);
     setOpen(true);
   };
@@ -38,13 +38,13 @@ const Pizzas: React.FC = () => {
   if (loading) return <CardItemSkeleton data-tested="pizza-list-loading"></CardItemSkeleton>;
 
   const pizzaList = data?.pizzas.map((pizza: Pizza) => (
-    <PizzaItem data-testid={`pizza-item-${pizza?.id}`} pizza={pizza} key={pizza.id} selectPizza={selectPizza} />
+    <PizzaItem data-testid={`pizza-item-${pizza?.id}`} pizza={pizza} key={pizza.id} handleOpen={handleOpen} />
   ));
   return (
     <Container maxWidth="md">
       <PageHeader pageHeader={'Pizza List'} />
       <List className={classes.container}>
-        <PizzaItem key="add-pizza" selectPizza={selectPizza} />
+        <PizzaItem key="add-pizza" handleOpen={handleOpen} />
         {pizzaList}
       </List>
 

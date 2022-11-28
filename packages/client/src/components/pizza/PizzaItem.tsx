@@ -5,9 +5,9 @@ import toDollars from '../../lib/format-dollars';
 
 export interface PizzaItemProps {
   pizza?: Pizza;
-  selectPizza: (pizza?: Pizza) => void;
+  handleOpen: (pizza?: Pizza) => void;
 }
-const PizzaItem: React.FC<PizzaItemProps> = ({ pizza, selectPizza, ...props }) => {
+const PizzaItem: React.FC<PizzaItemProps> = ({ pizza, handleOpen, ...props }) => {
   const toppingList = pizza?.toppings.map((topping: Topping) => (
     <li key={topping.id} data-testid={`topping-item-${topping?.id}`}>
       {topping.name}
@@ -15,7 +15,7 @@ const PizzaItem: React.FC<PizzaItemProps> = ({ pizza, selectPizza, ...props }) =
   ));
 
   return (
-    <ListItem {...props} onClick={(): void => selectPizza(pizza)}>
+    <ListItem {...props} onClick={(): void => handleOpen(pizza)}>
       <CardItem>
         <p data-testid={`topping-name-${pizza?.id}`}>Pizza : {pizza?.name ?? 'Add Pizza'}</p>
         <p data-testid={`pizza-description-${pizza?.id}`}>
