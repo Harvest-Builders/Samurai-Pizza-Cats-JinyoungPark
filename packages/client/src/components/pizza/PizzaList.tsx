@@ -29,6 +29,13 @@ const useStyles = makeStyles(({ typography }: Theme) =>
     },
   })
 );
+
+const [selectedPizza, setSelectedPizza] = React.useState<Partial<Pizza>>();
+
+const handleOpen = (pizza?: Pizza): void => {
+  setSelectedPizza(pizza);
+};
+
 const PizzaList: React.FC = () => {
   const classes = useStyles();
   const { loading, data, error } = useQuery(GET_PIZZAS);
@@ -41,14 +48,7 @@ const PizzaList: React.FC = () => {
   }
 
   const pizzaList = data?.pizzas.map((pizza: Pizza) => (
-    <PizzaItem
-      data-testid={`pizza-item-${pizza?.id}`}
-      key={pizza.id}
-      pizza={pizza}
-      selectPizza={function (pizza?: Pizza | undefined): void {
-        throw new Error('Function not implemented.');
-      }}
-    />
+    <PizzaItem data-testid={`pizza-item-${pizza?.id}`} key={pizza.id} pizza={pizza} handleOpen={handleOpen} />
   ));
 
   return (
@@ -58,15 +58,11 @@ const PizzaList: React.FC = () => {
         <ListItem className={classes.header}>
           <h2 className={classes.name}>Pizza</h2>
         </ListItem>
-        <PizzaItem
-          key="add-pizza"
-          selectPizza={function (pizza?: Pizza | undefined): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
+        <PizzaItem key="add-pizza" handleOpen={handleOpen} />
         {pizzaList}
       </List>
     </Container>
   );
 };
+
 export default PizzaList;

@@ -12,6 +12,7 @@ import {
   Paper,
   TextField,
   Theme,
+  Grid,
 } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 import { Topping } from '../../types';
@@ -126,39 +127,46 @@ const PizzaModal = ({ selectedPizza, open, setOpen }: PizzaModalProps): JSX.Elem
                   helperText={touched.imgSrc && errors.imgSrc}
                 />
 
-                <div role="group" aria-labelledby="checkbox-group">
+                <Grid container spacing={0}>
                   {allToppings.map((topping) => {
                     return (
-                      <label>
+                      <Grid item xs={4}>
                         <Field key={topping.id} type="checkbox" name="toppingIds" value={topping.id} />
                         {topping.name}
-                      </label>
+                      </Grid>
                     );
                   })}
-                </div>
-                <IconButton
-                  edge="end"
-                  aria-label="update"
-                  type="button"
-                  onClick={(): void => {
-                    values?.id ? onUpdatePizza(values) : onCreatePizza(values);
-                    setOpen(false);
-                  }}
-                  disabled={!isValid}
-                >
-                  <AddCircle />
-                </IconButton>
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  type="button"
-                  onClick={(): void => {
-                    onDeletePizza(values);
-                    setOpen(false);
-                  }}
-                >
-                  <Delete />
-                </IconButton>
+                </Grid>
+
+                <Grid container spacing={3}>
+                  <Grid item xs={8}>
+                    <IconButton
+                      edge="end"
+                      aria-label="update"
+                      type="button"
+                      onClick={(): void => {
+                        values?.id ? onUpdatePizza(values) : onCreatePizza(values);
+                        setOpen(false);
+                      }}
+                      disabled={!isValid}
+                    >
+                      <AddCircle />
+                    </IconButton>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <IconButton
+                      edge="end"
+                      aria-label="delete"
+                      type="button"
+                      onClick={(): void => {
+                        onDeletePizza(values);
+                        setOpen(false);
+                      }}
+                    >
+                      <Delete />
+                    </IconButton>
+                  </Grid>
+                </Grid>
               </Form>
             )}
           </Formik>
