@@ -38,7 +38,6 @@ const handleOpen = (pizza?: Pizza): void => {
 
 const PizzaList: React.FC = () => {
   const classes = useStyles();
-
   const { loading, data, error } = useQuery(GET_PIZZAS);
   if (loading) {
     return <div className={classes.skeleton}>Loading ...</div>;
@@ -65,4 +64,5 @@ const PizzaList: React.FC = () => {
     </Container>
   );
 };
+
 export default PizzaList;

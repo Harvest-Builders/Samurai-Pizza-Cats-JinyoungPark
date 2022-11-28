@@ -54,3 +54,34 @@ const Pizzas: React.FC = () => {
 };
 
 export default Pizzas;
+
+// import React from 'react';
+// import { Pizza } from '../../types';
+// import { GET_PIZZAS } from '../../hooks/graphql/pizza/queries/get-pizzas';
+// import { Container} from '@material-ui/core';
+// import PizzaItem from './PizzaItem';
+// import CardItemSkeleton from '../common/CardItemSkeleton';
+// import { useQuery } from '@apollo/client';
+// import PizzaList from './PizzaList';
+// import PageHeader from '../common/PageHeader';
+// import PizzaModal from './PizzaModal';
+
+// const Pizzas: React.FC = () => {
+//   const [selectedPizza, setSelectedPizza] = React.useState<Pizza>();
+//   const [open, setOpen] = React.useState(false);
+
+//   const selectPizza = (pizza?: Pizza): void => {
+//     setOpen(!open);
+//     pizza ? setSelectedPizza(pizza) : setSelectedPizza(undefined);
+//   };
+
+//   return (
+//     <Container maxWidth="md">
+//       <PageHeader pageHeader={'Pizzas'} />
+//         <PizzaList selectPizza={selectPizza} />
+//       <PizzaModal  open={open} selectPizza={selectPizza} pizza={selectedPizza} />
+//     </Container>
+//   );
+// };
+
+// export default Pizzas;
