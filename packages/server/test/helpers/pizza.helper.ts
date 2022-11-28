@@ -1,15 +1,14 @@
 import { ObjectId } from 'bson';
 import { Pizza } from '../../src/application/schema/types/schema';
 import { PizzaDocument } from '../../src/entities/pizza';
-
+import { PizzaResponse } from '../../src/application/providers/pizza/pizza.provider.types';
 const createMockPizza = (data?: Partial<Pizza>): Pizza => {
   return {
     __typename: 'Pizza',
     id: new ObjectId().toHexString(),
     name: 'Test Pizza',
-    description: 'Test pizza description',
-    imgSrc:
-      'https://images.unsplash.com/photo-1627626775846-122b778965ae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80',
+    description: 'test Pizza description',
+    imgSrc: 'testImg',
     toppings: [
       {
         __typename: 'Topping',
@@ -28,17 +27,32 @@ const createMockPizza = (data?: Partial<Pizza>): Pizza => {
     ...data,
   };
 };
-
+const createMockPizzaResponse = (data?: Partial<PizzaDocument>): PizzaResponse => {
+  return {
+    results: [
+      {
+        id: new ObjectId().toString(),
+        name: 'Test Pizza',
+        description: 'test Pizza description',
+        imgSrc: 'testImg',
+        toppingIds: ['19651dda4a0af8315d840412', 'e9e565e9a57cf33fb9b8ceed'],
+        ...data,
+      },
+    ],
+    totalCount: 5,
+    hasNextPage: true,
+    cursor: '3a653aabc755306f12660be0',
+  };
+};
 const createMockPizzaDocument = (data?: Partial<PizzaDocument>): PizzaDocument => {
   return {
     _id: new ObjectId(),
     name: 'Test Pizza',
-    description: 'Test pizza description',
+    description: 'test Pizza description',
+    imgSrc: 'testImg',
     toppingIds: ['19651dda4a0af8315d840412', 'e9e565e9a57cf33fb9b8ceed'],
-    imgSrc:
-      'https://images.unsplash.com/photo-1627626775846-122b778965ae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80',
     ...data,
   };
 };
 
-export { createMockPizza, createMockPizzaDocument };
+export { createMockPizza, createMockPizzaDocument, createMockPizzaResponse };
