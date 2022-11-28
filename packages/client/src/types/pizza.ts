@@ -1,11 +1,10 @@
-import { ObjectID } from 'bson';
 import { Topping } from './topping';
 
 export interface Pizza {
   id: string;
   name: string;
   description: string;
-  toppings: Topping[];
+  toppings: Array<Topping>;
   imgSrc: string;
   priceCents: number;
 }

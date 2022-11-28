@@ -10,14 +10,20 @@ const typeDefs = gql`
     priceCents: Long!
   }
 
-  type Topping {
-    id: ObjectID!
-    name: String!
-    priceCents: Long!
+  type PizzaResponse {
+    results: [Pizza!]!
+    totalCount: Int!
+    hasNextPage: Boolean!
+    cursor: String
+  }
+
+  input QueryInput {
+    limit: Int!
+    cursor: String!
   }
 
   type Query {
-    pizzas: [Pizza!]!
+    pizzas(input: QueryInput): PizzaResponse!
   }
 
   type Mutation {
@@ -29,7 +35,7 @@ const typeDefs = gql`
   input CreatePizzaInput {
     name: String!
     description: String!
-    toppingIds: ObjectID!
+    toppingIds: [ObjectID!]!
     imgSrc: String!
   }
 
@@ -43,7 +49,6 @@ const typeDefs = gql`
     description: String
     toppingIds: [ObjectID!]
     imgSrc: String
-    priceCents: Long
   }
 `;
 

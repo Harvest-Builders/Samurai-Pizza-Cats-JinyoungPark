@@ -1,7 +1,7 @@
-const validateStringInputs = (input: string | string[]): void => {
+const validateStringInputs = (input: string | string[] | (string | null | undefined)[]): void => {
   if (Array.isArray(input)) {
-    input.forEach((elem: string) => {
-      if (!elem.trim()) {
+    input.forEach((elem) => {
+      if (!elem?.trim()) {
         throw new Error('Inputs cannot be empty strings');
       }
     });
