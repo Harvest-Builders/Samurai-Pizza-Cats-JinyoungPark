@@ -15,10 +15,10 @@ const PizzaItem: React.FC<PizzaItemProps> = ({ pizza, handleOpen, ...props }) =>
   ));
 
   return (
-    <ListItem {...props} onClick={(): void => handleOpen(pizza)}>
+    <ListItem data-testid={`pizza-select-${pizza?.id}`} {...props} onClick={(): void => handleOpen(pizza)}>
       <CardItem>
-        <p data-testid={`topping-name-${pizza?.id}`}>Pizza : {pizza?.name ?? 'Add Pizza'}</p>
-        <p data-testid={`pizza-description-${pizza?.id}`}>
+        <p data-testid={`pizza-name-${pizza?.id}`}>Pizza : {pizza?.name ?? 'Add Pizza'}</p>
+        <p data-testid={`pizza-description-${pizza?.description}`}>
           Description : {pizza?.description ? pizza.description : ''}
         </p>
         <p data-testid={`pizza-priceCents-${pizza?.priceCents}`}>

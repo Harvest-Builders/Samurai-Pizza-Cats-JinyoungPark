@@ -17,8 +17,8 @@ describe('PizzaItem', () => {
 
     return {
       ...view,
-      $getCorrectPizza: () => screen.getByTestId(/^pizza-id/),
-      $getName: () => screen.getByTestId(/^pizza-price/),
+      $getCorrectPizza: () => screen.getByTestId(`pizza-select-${props?.pizza?.id}`),
+      $getName: () => screen.getByTestId(/^pizza-name/),
       $getDescription: () => screen.getByTestId(/^pizza-description/),
       $getImage: () => screen.getByTestId(/^pizza-image/),
       $getPriceCents: () => screen.getByTestId(/^pizza-priceCents/),
@@ -35,11 +35,6 @@ describe('PizzaItem', () => {
     expect($getImage()).toBeVisible();
     expect($getPriceCents()).toBeVisible();
     expect($getToppings()).toBeVisible();
-  });
-
-  test('should have a correct item', async () => {
-    const { $getCorrectPizza } = renderPizzaList(props);
-    expect($getCorrectPizza()).not.toBeNull();
   });
 
   test('should call handleOpen when the pizza list is clicked', async () => {
