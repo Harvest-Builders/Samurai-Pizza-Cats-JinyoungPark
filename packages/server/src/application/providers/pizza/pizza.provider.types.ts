@@ -8,9 +8,9 @@ export interface Pizza {
 
 export interface CreatePizzaInput {
   name: string;
-  description?: string;
-  toppingIds?: string[];
-  imgSrc?: string;
+  description: string;
+  toppingIds: string[];
+  imgSrc: string;
 }
 
 export interface UpdatePizzaInput {
@@ -19,9 +19,11 @@ export interface UpdatePizzaInput {
   description?: string | null;
   toppingIds?: string[] | null;
   imgSrc?: string | null;
-  priceCents?: number | null;
 }
 
-export interface DeletePizzaInput {
-  id?: string | null;
+export interface PizzaResponse {
+  cursor: string | null;
+  hasNextPage: Boolean;
+  totalCount: number;
+  results: Pizza[];
 }

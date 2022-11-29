@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/styles';
-import { AddCircle } from '@material-ui/icons';
+import { AddCircle, CallMissedSharp } from '@material-ui/icons';
 import { Container, createStyles, Theme, Grid, IconButton } from '@material-ui/core';
 import { GET_PIZZAS } from '../../hooks/graphql/pizza/queries/get-pizzas';
 import { Pizza } from '../../types';
@@ -10,9 +10,9 @@ import PizzaModal from './PizzaModal';
 import PizzaItem from './PizzaItem';
 import PageHeader from '../common/PageHeader';
 import CardItemSkeleton from '../common/CardItemSkeleton';
-import makePizzaImg from '../../assets/img/make-pizza.jpeg';
+import makePizzaBackimage from '../../assets/img/make-pizza.jpeg';
 
-const useStyles = makeStyles(({ typography }: Theme) =>
+const useStyles = makeStyles(({ typography, spacing }: Theme) =>
   createStyles({
     container: {
       minWidth: typography.pxToRem(650),
@@ -22,9 +22,31 @@ const useStyles = makeStyles(({ typography }: Theme) =>
     makePizza: {
       justifyContent: 'space-between',
       color: 'white',
-      backgroundImage: `url(${makePizzaImg})`,
+      backgroundImage: `url(${makePizzaBackimage})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
+    },
+
+    PageNationButton: {
+      marginTop: '.5rem',
+      width: '100%',
+      height: '50px',
+      border: 'none',
+      outline: 'none',
+      background: '#2f2f2f',
+      color: '#fff',
+      fontSize: '22px',
+      borderRadius: '5px',
+      textAlign: 'center',
+      position: 'relative',
+      overflow: 'hidden',
+      cursor: 'pointer',
+    },
+
+    LastPage: {
+      cursor: 'auto',
+      background: 'white',
+      color: 'black',
     },
   })
 );
@@ -32,19 +54,20 @@ const useStyles = makeStyles(({ typography }: Theme) =>
 const Pizzas: React.FC = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [pageLimit, setPageLimit] = React.useState<number>(6);
+  const [cursor, setCursor] = React.useState<string>();
   const [selectedPizza, setSelectedPizza] = React.useState<Partial<Pizza>>();
-  const { loading, data, error } = useQuery(GET_PIZZAS);
-
-  const handleOpen = (pizza?: Pizza): void => {
+  const { loading, data, error, fetchMore } = useQuery(GET_PIZZAS, {
+    variables: { input: { limit: 5, cursor: 'initial' } },
+  });
+  React.useEffect(() => {
+    setCursor(data?.pizzas.cursor);
+  }, [data]);
+  const selectPizza = (pizza?: Pizza): void => {
     setSelectedPizza(pizza);
     setOpen(true);
   };
   if (error) return <div>Error! {error.message}</div>;
-  if (loading) return <CardItemSkeleton data-tested="pizza-list-loading"></CardItemSkeleton>;
-
-  const pizzaList = data?.pizzas.map((pizza: Pizza) => (
-    <PizzaItem data-testid={`pizza-item-${pizza?.id}`} pizza={pizza} key={pizza.id} handleOpen={handleOpen} />
-  ));
 
   const numOfSkeleton: number = 9;
   const makeSkeletonArray = (): number[] => {
@@ -54,15 +77,36 @@ const Pizzas: React.FC = () => {
     }
     return array;
   };
-
-  const pizzasSkeleton = makeSkeletonArray().map((index) => (
+  const pizzasSkeleton = makeSkeletonArray().map((el, index) => (
     <Grid item xs={4} md={4} key={index}>
       <CardItemSkeleton data-testid="pizza-list-loading"></CardItemSkeleton>
     </Grid>
   ));
 
+  const getNextPage = () => {
+    fetchMore({
+      variables: { input: { limit: pageLimit, cursor: cursor } },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+        const { results, hasNextPage, cursor, totalCount, __typename } = fetchMoreResult.pizzas;
+        return Object.assign({}, prev, {
+          pizzas: {
+            results: [...prev.pizzas.results, ...results],
+            cursor: cursor,
+            hasNextPage: hasNextPage,
+            totalCount: totalCount,
+            __typename: __typename,
+          },
+        });
+      },
+    });
+  };
+
+  const pizzaList = data?.pizzas.results.map((pizza: Pizza) => (
+    <PizzaItem data-testid={`pizza-item-${pizza?.id}`} pizza={pizza} key={pizza.id} selectPizza={selectPizza} />
+  ));
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
       <PageHeader pageHeader={'Pizza List'} />
       <Grid container spacing={2}>
         {loading ? (
@@ -70,7 +114,7 @@ const Pizzas: React.FC = () => {
         ) : (
           <Grid item xs={4} md={4}>
             <CardItem rootClassName={classes.makePizza}>
-              <h1>Create A New Pizza</h1>
+              <h1>Make A New Pizza</h1>
               <IconButton
                 edge="end"
                 size="medium"
@@ -78,7 +122,7 @@ const Pizzas: React.FC = () => {
                 type="button"
                 color="inherit"
                 onClick={(): void => {
-                  handleOpen();
+                  selectPizza();
                   setOpen(true);
                 }}
               >
@@ -90,7 +134,22 @@ const Pizzas: React.FC = () => {
 
         {pizzaList}
       </Grid>
+
       <PizzaModal selectedPizza={selectedPizza} open={open} setOpen={setOpen} />
+      <form>
+        <input
+          type="button"
+          data-testid="next-page-button"
+          onClick={(): void => getNextPage()}
+          className={
+            data?.pizzas.hasNextPage == true
+              ? classes.PageNationButton
+              : `${classes.PageNationButton} ${classes.LastPage}`
+          }
+          disabled={data?.pizzas.hasNextPage == false ? true : false}
+          value={data?.pizzas.hasNextPage == false ? 'NO MORE PIZZA' : 'NEXT'}
+        />
+      </form>
     </Container>
   );
 };

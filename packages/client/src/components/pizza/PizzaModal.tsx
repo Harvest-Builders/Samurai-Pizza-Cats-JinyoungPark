@@ -1,6 +1,6 @@
 import React from 'react';
-import { Field, Form, Formik, FormikProps } from 'formik';
-import { AddCircle, Delete } from '@material-ui/icons';
+import { Field, Form, Formik } from 'formik';
+import Button from '@material-ui/core/Button';
 import * as yup from 'yup';
 import {
   Backdrop,
@@ -17,7 +17,7 @@ import {
 import { useQuery } from '@apollo/client';
 import { Topping } from '../../types';
 import { GET_TOPPINGS } from '../../hooks/graphql/topping/queries/get-toppings';
-
+import makePizzaImage from '../../assets/img/default-pizza.jpeg';
 import usePizzaMutations from '../../hooks/pizza/use-pizza-mutations';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -30,20 +30,20 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-      width: '400px',
+      padding: theme.spacing(3, 3, 2),
+      width: '420px',
+    },
+    image: {
+      borderRadius: '5px',
+      height: '300px',
+      width: '100%',
     },
     root: {
       '& .MuiTextField-root': {
-        margin: theme.spacing(1),
-        width: '25ch',
+        margin: theme.spacing(1, 0),
+        width: '100%',
         display: 'flex',
       },
-    },
-    toppingList: {
-      display: 'flex',
-      displayWrap: 'wrap',
-      width: '300px',
     },
   })
 );
@@ -81,7 +81,11 @@ const PizzaModal = ({ selectedPizza, open, setOpen }: PizzaModalProps): JSX.Elem
     >
       <Fade in={open}>
         <Paper className={classes.paper}>
-          <h2>{selectedPizza ? 'Edit' : 'Add'} Pizza</h2>
+          <img
+            className={classes.image}
+            data-testid={`pizza-image-${selectedPizza?.imgSrc}`}
+            src={selectedPizza ? selectedPizza.imgSrc : makePizzaImage}
+          ></img>
           <Formik
             enableReinitialize={true}
             initialValues={{
@@ -144,13 +148,14 @@ const PizzaModal = ({ selectedPizza, open, setOpen }: PizzaModalProps): JSX.Elem
                       edge="end"
                       aria-label="update"
                       type="button"
+                      color="inherit"
                       onClick={(): void => {
                         values?.id ? onUpdatePizza(values) : onCreatePizza(values);
                         setOpen(false);
                       }}
                       disabled={!isValid}
                     >
-                      <AddCircle />
+                      <Button variant="contained">Submit</Button>
                     </IconButton>
                   </Grid>
                   <Grid item xs={4}>
@@ -163,7 +168,7 @@ const PizzaModal = ({ selectedPizza, open, setOpen }: PizzaModalProps): JSX.Elem
                         setOpen(false);
                       }}
                     >
-                      <Delete />
+                      {selectedPizza && <Button variant="contained">Delete</Button>}
                     </IconButton>
                   </Grid>
                 </Grid>
