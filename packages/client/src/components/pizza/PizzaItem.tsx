@@ -1,6 +1,5 @@
 import { Pizza, Topping } from '../../types';
 import CardItem from '../common/CardItem';
-import { ListItem } from '@material-ui/core';
 import toDollars from '../../lib/format-dollars';
 import { makeStyles } from '@material-ui/styles';
 import { createStyles, Grid, Theme } from '@material-ui/core';
@@ -15,9 +14,9 @@ const useStyles = makeStyles(({ typography, spacing }: Theme) =>
 );
 export interface PizzaItemProps {
   pizza?: Pizza;
-  handleOpen: (pizza?: Pizza) => void;
+  selectPizza: (pizza?: Pizza) => void;
 }
-const PizzaItem: React.FC<PizzaItemProps> = ({ pizza, handleOpen, ...props }) => {
+const PizzaItem: React.FC<PizzaItemProps> = ({ pizza, selectPizza, ...props }) => {
   const classes = useStyles();
 
   return (
@@ -27,7 +26,7 @@ const PizzaItem: React.FC<PizzaItemProps> = ({ pizza, handleOpen, ...props }) =>
       md={4}
       data-testid={`pizza-select-${pizza?.id}`}
       {...props}
-      onClick={(): void => handleOpen(pizza)}
+      onClick={(): void => selectPizza(pizza)}
     >
       <CardItem>
         <img className={classes.image} data-testid={`pizza-image-${pizza?.imgSrc}`} src={pizza?.imgSrc}></img>

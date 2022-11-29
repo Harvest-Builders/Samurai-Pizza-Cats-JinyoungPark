@@ -1,18 +1,23 @@
 import { gql } from '@apollo/client';
 
 const GET_PIZZAS = gql`
-  query Query {
-    pizzas {
-      toppings {
-        name
-        priceCents
+  query getPizzas($input: QueryInput) {
+    pizzas(input: $input) {
+      results {
         id
+        name
+        description
+        imgSrc
+        toppings {
+          id
+          name
+          priceCents
+        }
+        priceCents
       }
-      name
-      id
-      description
-      priceCents
-      imgSrc
+      hasNextPage
+      totalCount
+      cursor
     }
   }
 `;
